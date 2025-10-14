@@ -6,8 +6,13 @@ import Editor from '@/components/Editor';
 import { FiArrowLeft, FiEye, FiSave } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 
-// ... (Your interface and state logic can remain the same)
-interface PostData { /* ... */ }
+
+interface PostData {
+  authorName: string | number | readonly string[] | undefined;
+  tags: string | number | readonly string[] | undefined;
+  content: string;
+  heading: string | number | readonly string[] | undefined;
+}
 
 export default function CreatePostPage() {
   const [editorLoaded, setEditorLoaded] = useState<boolean>(false);
@@ -20,14 +25,14 @@ export default function CreatePostPage() {
     setEditorLoaded(true);
   }, []);
 
-  // ... (Your handler functions can remain the same)
+  
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => { /* ... */ };
   const handleEditorChange = (data: string) => { /* ... */ };
   const handleSubmit = async () => { /* Your submit logic */ };
 
   return (
     <main className="max-w-4xl mx-auto p-4 sm:p-8">
-      {/* Header */}
+    
       <header className="flex justify-between items-center pb-4 border-b border-border mb-8">
         <h1 className="text-2xl font-bold text-text">Flows Blog</h1>
         <Link href="/" className="text-sm text-text-muted hover:text-text transition-colors">
@@ -35,10 +40,10 @@ export default function CreatePostPage() {
         </Link>
       </header>
 
-      {/* Main Form - Vertical Card Layout */}
+     
       <div className="space-y-8">
         
-        {/* Heading Input - NO LABEL */}
+       
         <div className="bg-surface border border-border rounded-lg p-6">
           <input
             id="heading"
@@ -50,7 +55,6 @@ export default function CreatePostPage() {
           />
         </div>
 
-        {/* Text Editor Card */}
         <div className="bg-surface border border-border rounded-lg">
           <div className="p-6 border-b border-border">
             <h3 className="text-sm font-medium text-text-muted">Text Editor</h3>
@@ -63,7 +67,7 @@ export default function CreatePostPage() {
           />
         </div>
         
-        {/* Tags Card */}
+       
         <div className="bg-surface border border-border rounded-lg p-6">
           <label htmlFor="tags" className="text-sm font-medium text-text-muted block mb-2">Tags</label>
           <input
@@ -76,7 +80,7 @@ export default function CreatePostPage() {
           />
         </div>
 
-        {/* Author Name Card */}
+    
         <div className="bg-surface border border-border rounded-lg p-6">
           <label htmlFor="authorName" className="text-sm font-medium text-text-muted block mb-2">Author Name</label>
           <input
@@ -89,13 +93,12 @@ export default function CreatePostPage() {
           />
         </div>
 
-        {/* Action Buttons */}
         <div className="flex items-center gap-4 pt-4 border-t border-border">
-          {/* Preview Button (Subtle) */}
+          
           <button className="flex-1 flex items-center justify-center gap-2 p-3 bg-primary/20 text-primary font-semibold rounded-lg transition-colors hover:bg-primary/30">
             <FiEye /> Preview
           </button>
-          {/* Publish Button (Solid Blue with Hover) */}
+         
           <button
             onClick={handleSubmit}
             disabled={isLoading}

@@ -11,11 +11,11 @@ interface EditorProps {
 
 function Editor({ onChange, editorLoaded, name, value }: EditorProps) {
   const editorRef = useRef<any>(null);
-  // Use state to safely store the loaded components
+ 
   const [editorComponents, setEditorComponents] = useState<{ CKEditor: any; ClassicEditor: any } | null>(null);
 
   useEffect(() => {
-    // Only load the editor when the parent page signals it's ready
+    
     if (editorLoaded) {
       editorRef.current = {
         CKEditor: require('@ckeditor/ckeditor5-react').CKEditor,
@@ -23,9 +23,9 @@ function Editor({ onChange, editorLoaded, name, value }: EditorProps) {
       };
       setEditorComponents(editorRef.current);
     }
-  }, [editorLoaded]); // This effect runs when editorLoaded changes
+  }, [editorLoaded]); 
 
-  // Safely guard against rendering until everything is ready
+  
   if (!editorLoaded || !editorComponents) {
     return (
       <div className="p-8 bg-surface border-2 border-dashed border-border rounded-lg text-center text-text-muted">
@@ -34,7 +34,7 @@ function Editor({ onChange, editorLoaded, name, value }: EditorProps) {
     );
   }
 
-  // Destructure safely only after the state is set
+  
   const { CKEditor, ClassicEditor } = editorComponents;
 
   return (
