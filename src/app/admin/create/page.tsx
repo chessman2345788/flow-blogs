@@ -6,53 +6,52 @@ import Editor from '@/components/Editor';
 import { FiArrowLeft, FiEye, FiSave } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 
-
 interface PostData {
-  authorName: string | number | readonly string[] | undefined;
-  tags: string | number | readonly string[] | undefined;
+  heading: string;
   content: string;
-  heading: string | number | readonly string[] | undefined;
+  tags: string;
+  authorName: string;
 }
 
 export default function CreatePostPage() {
+  // This state is the signal we send to the Editor component
   const [editorLoaded, setEditorLoaded] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [postData, setPostData] = useState<PostData>({
     heading: '', content: '', tags: '', authorName: '',
   });
 
+  
   useEffect(() => {
     setEditorLoaded(true);
   }, []);
 
-  
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => { /* ... */ };
-  const handleEditorChange = (data: string) => { /* ... */ };
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setPostData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleEditorChange = (data: string) => {
+    setPostData((prev) => ({ ...prev, content: data }));
+  };
+
   const handleSubmit = async () => { /* Your submit logic */ };
 
   return (
     <main className="max-w-4xl mx-auto p-4 sm:p-8">
-    
+      {/* Header */}
       <header className="flex justify-between items-center pb-4 border-b border-border mb-8">
-        <h1 className="text-2xl font-bold text-text">Flows Blog</h1>
+        <h1 className="text-2xl font-bold text-text">Manchester Blogs</h1>
         <Link href="/" className="text-sm text-text-muted hover:text-text transition-colors">
           &larr; Back to Dashboard
         </Link>
       </header>
 
-     
       <div className="space-y-8">
-        
-       
+        {/* Heading Card */}
         <div className="bg-surface border border-border rounded-lg p-6">
-          <input
-            id="heading"
-            name="heading"
-            value={postData.heading}
-            onChange={handleInputChange}
-            placeholder="Enter the title of your blog post..."
-            className="w-full text-2xl font-semibold bg-transparent outline-none placeholder:text-text-muted/50"
-          />
+          <label htmlFor="heading" className="text-sm font-medium text-text-muted block mb-2">Heading</label>
+          <input id="heading" name="heading" value={postData.heading} onChange={handleInputChange} placeholder="Enter the title..." className="w-full text-2xl font-semibold bg-transparent outline-none placeholder:text-text-muted/50" />
         </div>
 
         <div className="bg-surface border border-border rounded-lg">
@@ -67,38 +66,18 @@ export default function CreatePostPage() {
           />
         </div>
         
-       
         <div className="bg-surface border border-border rounded-lg p-6">
           <label htmlFor="tags" className="text-sm font-medium text-text-muted block mb-2">Tags</label>
-          <input
-            id="tags"
-            name="tags"
-            value={postData.tags}
-            onChange={handleInputChange}
-            placeholder="e.g. tech, news"
-            className="w-full p-2 bg-background border border-border rounded-md outline-none focus:ring-2 focus:ring-secondary"
-          />
+          <input id="tags" name="tags" value={postData.tags} onChange={handleInputChange} placeholder="e.g. tech, news" className="w-full p-2 bg-background border border-border rounded-md outline-none focus:ring-2 focus:ring-secondary" />
         </div>
-
-    
         <div className="bg-surface border border-border rounded-lg p-6">
           <label htmlFor="authorName" className="text-sm font-medium text-text-muted block mb-2">Author Name</label>
-          <input
-            id="authorName"
-            name="authorName"
-            value={postData.authorName}
-            onChange={handleInputChange}
-            placeholder="Enter your name"
-            className="w-full p-2 bg-background border border-border rounded-md outline-none focus:ring-2 focus:ring-secondary"
-          />
+          <input id="authorName" name="authorName" value={postData.authorName} onChange={handleInputChange} placeholder="Enter your name" className="w-full p-2 bg-background border border-border rounded-md outline-none focus:ring-2 focus:ring-secondary" />
         </div>
-
         <div className="flex items-center gap-4 pt-4 border-t border-border">
-          
           <button className="flex-1 flex items-center justify-center gap-2 p-3 bg-primary/20 text-primary font-semibold rounded-lg transition-colors hover:bg-primary/30">
             <FiEye /> Preview
           </button>
-         
           <button
             onClick={handleSubmit}
             disabled={isLoading}

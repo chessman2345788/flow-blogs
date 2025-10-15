@@ -3,27 +3,35 @@
 @tailwind utilities;
 
 body {
-  background-color: #0A0A0A; 
-  color: #F8FAFC; 
-
-  background-image: radial-gradient(ellipse 80% 80% at 50% -20%, rgba(168, 85, 247, 0.15), rgba(255, 255, 255, 0));
+  background-color: #0A0A0A;
+  color: #F8FAFC;
 }
 
+/* Definitive CSS overrides to force a dark theme on CKEditor.
+  The !important rule is necessary to win against the editor's default styles.
+*/
 
+/* Styles for the main content area where you type */
 .ck-editor__editable_inline {
-  background: #1A1A1A ;
-  color: #F8FAFC ;
-  border-radius: 0 0 0.75rem 0.75rem ;
-  border: 1px solid #2A2A2A ;
+  background: #1A1A1A !important;  /* Dark background for the typing area */
+  color: #F8FAFC !important;      /* Light text color for visibility */
+  border-radius: 0 0 0.75rem 0.75rem !important;
+  border: 1px solid #2A2A2A !important;
 }
+
+/* Styles for the toolbar */
 .ck-toolbar {
-  background: #1A1A1A ;
-  border-radius: 0.75rem 0.75rem 0 0 ;
-  border: 1px solid #2A2A2A ;
+  background: #1A1A1A !important;
+  border-radius: 0.75rem 0.75rem 0 0 !important;
+  border: 1px solid #2A2A2A !important;
 }
+
+/* Overrides for various editor UI elements like buttons and dropdowns */
 :root {
   --ck-color-base-border: #2A2A2A;
   --ck-color-base-background: #1A1A1A;
   --ck-color-text: #F8FAFC;
-  --ck-color-focus-ring: 2px solid #EC4899;
+  --ck-color-focus-ring: 2px solid #EC4899; /* Pink accent for focus */
+  --ck-color-button-default-hover-background: #27272A;
+  --ck-color-dropdown-panel-background: #1A1A1A;
 }

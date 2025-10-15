@@ -11,11 +11,10 @@ interface EditorProps {
 
 function Editor({ onChange, editorLoaded, name, value }: EditorProps) {
   const editorRef = useRef<any>(null);
- 
   const [editorComponents, setEditorComponents] = useState<{ CKEditor: any; ClassicEditor: any } | null>(null);
 
   useEffect(() => {
-    
+  
     if (editorLoaded) {
       editorRef.current = {
         CKEditor: require('@ckeditor/ckeditor5-react').CKEditor,
@@ -23,9 +22,9 @@ function Editor({ onChange, editorLoaded, name, value }: EditorProps) {
       };
       setEditorComponents(editorRef.current);
     }
-  }, [editorLoaded]); 
+  }, [editorLoaded]);
 
-  
+ 
   if (!editorLoaded || !editorComponents) {
     return (
       <div className="p-8 bg-surface border-2 border-dashed border-border rounded-lg text-center text-text-muted">
@@ -34,7 +33,7 @@ function Editor({ onChange, editorLoaded, name, value }: EditorProps) {
     );
   }
 
-  
+ 
   const { CKEditor, ClassicEditor } = editorComponents;
 
   return (
