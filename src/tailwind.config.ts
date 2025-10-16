@@ -12,18 +12,15 @@ const config: Config = {
         sans: ['Inter', 'sans-serif'],
       },
       colors: {
-        background: 'rgba(10, 10, 10, 1)',
-        surface: 'rgba(26, 26, 26, 1)',
-        primary: 'rgba(59, 130, 246, 1)',  
-        secondary: 'rgba(236, 72, 153, 1)', 
+        background: '#0A0A0A',
+        surface: '#1A1A1A',
+        primary: '#3B82F6',   // Blue for buttons
+        secondary: '#EC4899', // Pink for focus rings
         text: {
-          DEFAULT: 'rgba(248, 250, 252, 1)',
-          muted: 'rgba(148, 163, 184, 1)',
+          DEFAULT: '#F8FAFC',
+          muted: '#94A3B8',
         },
-        border: 'rgba(42, 42, 42, 1)',
-      },
-      borderRadius: {
-        'lg': '12px',
+        border: '#2A2A2A',
       },
     },
   },
