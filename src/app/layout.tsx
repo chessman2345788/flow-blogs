@@ -9,10 +9,13 @@ export const metadata = { title: 'Flows Blog | Admin Panel' };
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${inter.className} bg-background text-text`}>
         <Toaster
           position="top-center"
-          toastOptions={{ style: { background: '#333', color: '#fff' } }}
+          toastOptions={{
+          
+            style: { background: '#FFFFFF', color: '#111827', border: '1px solid #E5E7EB' },
+          }}
         />
         {children}
       </body>
