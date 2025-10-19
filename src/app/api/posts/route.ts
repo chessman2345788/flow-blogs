@@ -22,14 +22,14 @@ async function connectToDatabase() {
   return { client, db };
 }
 
-// --- Function to GET all posts ---
+
 export async function GET(request: Request) {
   let client: MongoClient | null = null;
   try {
     const { client: connectedClient, db } = await connectToDatabase();
     client = connectedClient; 
 
-    // Fetch all posts, sort by creation date (newest first)
+    
     const posts = await db.collection('posts').find({}).sort({ createdAt: -1 }).toArray();
     console.log(`Fetched ${posts.length} posts.`);
 
@@ -58,7 +58,7 @@ export async function POST(request: Request) {
   try {
     const postData = await request.json();
     const { client: connectedClient, db } = await connectToDatabase();
-    client = connectedClient; // Assign client for finally block
+    client = connectedClient; 
 
 
     const result = await db.collection('posts').insertOne({
