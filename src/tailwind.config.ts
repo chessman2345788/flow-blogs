@@ -11,20 +11,32 @@ const config: Config = {
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
       },
+      // Final All-Black Theme Palette
       colors: {
-        background: '#0A0A0A',
-        surface: '#1A1A1A',
-        primary: '#3B82F6',   // Blue
-        secondary: '#EC4899', // Pink
-        text: { DEFAULT: '#F8FAFC', muted: '#94A3B8' },
-        border: '#2A2A2A',
+        background: '#000000', // Pure Black
+        surface: '#0A0A0A',   // Very dark gray for cards/sections
+        primary: '#A3E635',   // Vibrant Lime Green for main buttons
+        secondary: '#22D3EE', // Bright Cyan for secondary actions/focus
+        text: {
+          DEFAULT: '#FFFFFF', // Pure White for main text
+          muted: '#333333',   // Very dark gray for placeholders
+          light: '#CCCCCC',    // Lighter gray for subtle text
+        },
+        border: '#1A1A1A',     // Dark gray for borders
       },
-      borderRadius: { 'lg': '0.75rem', 'full': '9999px' },
-      boxShadow: { 'soft': '0 8px 24px rgba(0, 0, 0, 0.3)', 'button-primary': '0 6px 15px rgba(59, 130, 246, 0.4)' },
+      borderRadius: {
+        'lg': '0.75rem',
+        'xl': '1rem',
+        'full': '9999px',
+      },
+      boxShadow: {
+        'soft': '0 4px 12px rgba(0, 0, 0, 0.4)',
+        'button-primary': '0 6px 15px rgba(163, 230, 53, 0.4)', // Lime Green shadow
+      },
     },
   },
   plugins: [
-    require('@tailwindcss/typography'), // Add this line
+    require('@tailwindcss/typography'), // For preview page styling
   ],
 }
 export default config

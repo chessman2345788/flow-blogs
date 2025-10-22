@@ -9,12 +9,13 @@ export const metadata = { title: 'Flows Blog | Admin Panel' };
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
+      {/* Applies base black background and white text */}
       <body className={`${inter.className} bg-background text-text`}>
         <Toaster
           position="top-center"
           toastOptions={{
-          
-            style: { background: '#FFFFFF', color: '#111827', border: '1px solid #E5E7EB' },
+            // Style toasts for the black theme
+            style: { background: '#0A0A0A', color: '#FFFFFF', border: '1px solid #1A1A1A' },
           }}
         />
         {children}
