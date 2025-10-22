@@ -14,12 +14,18 @@ function Editor({ onChange, editorLoaded, name, value }: EditorProps) {
   const [editorComponents, setEditorComponents] = useState<{ CKEditor: any; ClassicEditor: any } | null>(null);
 
   useEffect(() => {
+    
     if (editorLoaded) {
-      editorRef.current = {
-        CKEditor: require('@ckeditor/ckeditor5-react').CKEditor,
-        ClassicEditor: require('@ckeditor/ckeditor5-build-classic'),
-      };
-      setEditorComponents(editorRef.current);
+      try {
+        editorRef.current = {
+          CKEditor: require('@ckeditor/ckeditor5-react').CKEditor,
+          ClassicEditor: require('@ckeditor/ckeditor5-build-classic'),
+        };
+        setEditorComponents(editorRef.current);
+      } catch (error) {
+        console.error("Failed to load CKEditor components:", error);
+        // Handle error, maybe show an error message instead of loading
+      }
     }
   }, [editorLoaded]);
 
@@ -31,6 +37,7 @@ function Editor({ onChange, editorLoaded, name, value }: EditorProps) {
     );
   }
 
+  
   const { CKEditor, ClassicEditor } = editorComponents;
 
   return (
