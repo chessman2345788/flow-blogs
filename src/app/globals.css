@@ -1,17 +1,25 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+
+@import "tailwindcss";
 
 
+.ck-editor__editable_inline * {
+  color: #FFFFFF ;
+}
 .ck-editor__editable_inline {
-  border: 1px solid #E5E7EB; 
+  background: #0A0A0A ;
+  border: 1px solid #1A1A1A ;
   border-top: none ;
   border-radius: 0 0 0.75rem 0.75rem ;
+  min-height: 300px;
 }
 .ck-toolbar {
-  border: 1px solid #E5E7EB ; 
+  background: #0A0A0A ;
+  border: 1px solid #1A1A1A ;
   border-radius: 0.75rem 0.75rem 0 0 ;
 }
 :root {
-  --ck-color-focus-ring: 2px solid #3B82F6; 
+  --ck-color-base-border: #1A1A1A;
+  --ck-color-base-background: #0A0A0A;
+  --ck-color-text: #FFFFFF;
+  --ck-color-focus-ring: 2px solid #22D3EE;
 }

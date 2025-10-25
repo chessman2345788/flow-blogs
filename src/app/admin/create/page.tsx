@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import Editor from '@/components/Editor';
+import Editor from '@/components/Editor'; 
 import { FiArrowLeft, FiEye, FiSave } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 
@@ -27,55 +27,57 @@ export default function CreatePostPage() {
     setPostData((prev) => ({ ...prev, content: data }));
   };
 
-  // --- Preview Function (Stays the Same) ---
+
   const handlePreview = () => {
-    const previewData = {
-      heading: postData.heading,
-      content: postData.content,
-      authorName: postData.authorName,
-    };
-    try {
-      localStorage.setItem('blogPostPreview', JSON.stringify(previewData));
-      window.open('/admin/preview', '_blank');
-    } catch (error) {
-      console.error("Error saving preview data:", error);
-      toast.error("Could not generate preview.");
-    }
+    const previewData = { heading: postData.heading, content: postData.content, authorName: postData.authorName };
+    try { localStorage.setItem('blogPostPreview', JSON.stringify(previewData)); window.open('/admin/preview', '_blank'); }
+    catch (error) { console.error("Error preview:", error); toast.error("Could not preview."); }
   };
 
-  // --- Submit Function (Ensure this is correct) ---
+  
   const handleSubmit = async () => {
-    console.log("handleSubmit function was called!"); // Debug log
+    console.log("handleSubmit triggered");
 
     if (!postData.heading) {
+      console.log("Validation failed: Heading missing");
       return toast.error('Please enter a heading.');
     }
     setIsLoading(true);
     const toastId = toast.loading('Submitting your post...');
+    console.log("Submitting data:", postData); 
 
     const finalData = {
       ...postData,
-      tags: postData.tags.split(',').map((tag) => tag.trim()).filter(tag => tag), // Also filter empty tags
+      tags: postData.tags.split(',').map((tag) => tag.trim()).filter(tag => tag), 
     };
 
     try {
-      const response = await fetch('/api/posts', { // Check this endpoint is correct
+      const response = await fetch('/api/posts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(finalData),
       });
 
+      console.log("Fetch response status:", response.status);
+
       if (response.ok) {
         toast.success('Post submitted successfully!', { id: toastId });
-        setPostData({ heading: '', content: '', tags: '', authorName: '' }); // Clear form
+        setPostData({ heading: '', content: '', tags: '', authorName: '' }); 
       } else {
-        // Log detailed error from backend if available
-        const errorData = await response.json().catch(() => ({ message: 'Unknown server error' })); // Handle cases where response isn't JSON
-        console.error("Backend Error:", response.status, errorData);
-        toast.error(`Failed: ${errorData.message || response.statusText}`, { id: toastId });
+        
+        let errorMsg = `Server responded with status ${response.status}`;
+        try {
+          const errorData = await response.json();
+          errorMsg = errorData.message || errorMsg;
+          console.error("Backend Error Response:", errorData);
+        } catch (jsonError) {
+          console.error("Could not parse error response as JSON:", response.statusText);
+          errorMsg = response.statusText || errorMsg;
+        }
+        toast.error(`Submission failed: ${errorMsg}`, { id: toastId });
       }
     } catch (error) {
-      console.error('Network/Fetch Error:', error);
+      console.error('Network or fetch error during submit:', error);
       toast.error('Network error. Could not submit post.', { id: toastId });
     } finally {
       setIsLoading(false);
@@ -92,9 +94,9 @@ export default function CreatePostPage() {
       </header>
 
       <div className="space-y-6">
-        {/* Heading Card */}
-        <div className="bg-surface border border-border rounded-xl shadow-soft p-6">
-          <label htmlFor="heading" className="text-sm font-medium text-text-light block mb-2">Title</label>
+        
+        <div className="bg-surface border border-border rounded-lg shadow-soft p-6">
+          <label htmlFor="heading" className="text-sm font-medium text-text-muted block mb-2">Title</label>
           <input
             id="heading" name="heading" value={postData.heading} onChange={handleInputChange}
             placeholder="Your Post Title"
@@ -102,26 +104,25 @@ export default function CreatePostPage() {
           />
         </div>
 
-        {/* Text Editor Card */}
-        <div className="bg-surface border border-border rounded-xl shadow-soft">
+       
+        <div className="bg-surface border border-border rounded-lg shadow-soft">
           <div className="p-6 border-b border-border">
-            <h3 className="text-sm font-medium text-text-light">Content</h3>
+            <h3 className="text-sm font-medium text-text-muted">Content</h3>
           </div>
           <Editor name="content" value={postData.content} onChange={handleEditorChange} editorLoaded={editorLoaded} />
         </div>
-        
-        {/* Details Card */}
-        <div className="bg-surface border border-border rounded-xl shadow-soft p-6 space-y-6">
+
+        <div className="bg-surface border border-border rounded-lg shadow-soft p-6 space-y-6">
           <div>
-            <label htmlFor="tags" className="text-sm font-medium text-text-light block mb-2">Tags</label>
+            <label htmlFor="tags" className="text-sm font-medium text-text-muted block mb-2">Tags</label>
             <input
               id="tags" name="tags" value={postData.tags} onChange={handleInputChange}
-              placeholder="e.g. #webdev, #design"
+              placeholder=""
               className="w-full p-3 bg-background border border-border rounded-md outline-none focus:ring-2 focus:ring-secondary text-text placeholder:text-text-muted"
             />
           </div>
           <div>
-            <label htmlFor="authorName" className="text-sm font-medium text-text-light block mb-2">Author Name</label>
+            <label htmlFor="authorName" className="text-sm font-medium text-text-muted block mb-2">Author Name</label>
             <input
               id="authorName" name="authorName" value={postData.authorName} onChange={handleInputChange}
               placeholder="Enter your name"
@@ -129,17 +130,18 @@ export default function CreatePostPage() {
             />
           </div>
         </div>
-        
-        {/* Action Buttons */}
+
+       
         <div className="flex items-center justify-end gap-4 pt-4">
-          <button // "Preview" button - calls handlePreview
+          <button
             onClick={handlePreview}
             className="flex items-center justify-center gap-2 px-6 py-3 bg-surface border border-border text-secondary text-lg font-semibold rounded-full shadow-soft transition-colors hover:bg-border hover:text-secondary/80"
           >
             <FiEye /> Preview
           </button>
-          <button // "Publish Post" button - calls handleSubmit
-            onClick={handleSubmit} disabled={isLoading}
+          <button
+            onClick={handleSubmit} // Ensure this is correctly attached
+            disabled={isLoading}
             className="flex items-center justify-center gap-2 px-6 py-3 bg-primary text-background text-lg font-semibold rounded-full shadow-button-primary transition-all duration-300 hover:bg-primary/80 hover:-translate-y-1 disabled:bg-gray-700 disabled:text-gray-400 disabled:cursor-not-allowed"
           >
             <FiSave />

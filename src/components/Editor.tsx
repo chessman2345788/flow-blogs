@@ -14,7 +14,6 @@ function Editor({ onChange, editorLoaded, name, value }: EditorProps) {
   const [editorComponents, setEditorComponents] = useState<{ CKEditor: any; ClassicEditor: any } | null>(null);
 
   useEffect(() => {
-    
     if (editorLoaded) {
       try {
         editorRef.current = {
@@ -24,20 +23,18 @@ function Editor({ onChange, editorLoaded, name, value }: EditorProps) {
         setEditorComponents(editorRef.current);
       } catch (error) {
         console.error("Failed to load CKEditor components:", error);
-        // Handle error, maybe show an error message instead of loading
       }
     }
   }, [editorLoaded]);
 
   if (!editorLoaded || !editorComponents) {
     return (
-      <div className="p-8 bg-surface border-2 border-dashed border-border rounded-lg text-center text-text-muted">
+      <div className="p-8 bg-surface border-2 border-dashed border-border rounded-lg text-center text-text-light">
         Loading Editor...
       </div>
     );
   }
 
-  
   const { CKEditor, ClassicEditor } = editorComponents;
 
   return (

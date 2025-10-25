@@ -12,7 +12,7 @@ const dbName = process.env.MONGODB_DB;
 async function connectToDatabase() {
 
   if (!uri || !dbName) {
-    console.error("Database configuration is missing from environment variables."); // Added server-side log
+    console.error("Database configuration is missing from environment variables."); 
     throw new Error('Database configuration is missing.');
   }
   const client = new MongoClient(uri);
